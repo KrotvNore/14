@@ -1,0 +1,756 @@
+<!doctype html>
+<html lang="ru">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width,initial-scale=1" />
+<title>ПРИВЕТ ДАША</title>  
+
+<link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;600;800&display=swap" rel="stylesheet">
+
+<style>
+  :root{
+    --bg:#05030a;
+    --panel:#0f1116cc;
+    --glass: rgba(255,255,255,0.02);
+    --neon:#ff6fa3;
+    --neon-2:#ff3d8a;
+    --muted:#c9c7cf;
+    --accent-glow: 0 10px 40px rgba(255,90,140,0.12), inset 0 1px 0 rgba(255,255,255,0.02);
+    --radius:14px;
+    --container-w:1150px;
+  }
+  *{box-sizing:border-box}
+  html,body{height:100%}
+  body{
+    margin:0;
+    font-family:"Montserrat",system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial;
+    background:
+      radial-gradient(900px 500px at 10% 10%, rgba(255,80,140,0.03), transparent 12%),
+      radial-gradient(700px 360px at 90% 90%, rgba(60,40,140,0.02), transparent 12%),
+      linear-gradient(180deg,#040308,#0b0710 60%);
+    color:var(--muted);
+    -webkit-font-smoothing:antialiased;
+    -moz-osx-font-smoothing:grayscale;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    padding:28px;
+  }
+
+  .wrap{
+    width:100%;
+    max-width:var(--container-w);
+    background: linear-gradient(180deg, rgba(255,255,255,0.015), rgba(255,255,255,0.006));
+    border-radius:18px;
+    padding:22px;
+    box-shadow: var(--accent-glow);
+    border:1px solid rgba(255,255,255,0.02);
+    overflow:hidden;
+  }
+
+  header{
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    gap:12px;
+    margin-bottom:18px;
+  }
+  .brand{
+    display:flex;
+    gap:12px;
+    align-items:center;
+  }
+  .logo{
+    width:60px;height:60px;
+    border-radius:14px;
+    background:linear-gradient(135deg,var(--neon),var(--neon-2));
+    display:grid;place-items:center;
+    font-weight:900;color:white;font-size:22px;
+    box-shadow:0 10px 30px rgba(255,90,140,0.16);
+  }
+  h1{font-size:20px;margin:0;font-weight:800;color:#fff;letter-spacing:0.2px}
+  p.lead{margin:0;color:var(--muted);opacity:0.95;font-size:13px}
+
+  main{
+    display:grid;
+    grid-template-columns: 360px 1fr;
+    gap:20px;
+  }
+
+  /* left panel */
+  .panel{
+    background: linear-gradient(180deg, rgba(255,255,255,0.01), rgba(255,255,255,0.006));
+    border-radius:12px;
+    padding:16px;
+    min-height:520px;
+    border:1px solid rgba(255,255,255,0.02);
+    box-shadow: 0 8px 30px rgba(0,0,0,0.5);
+  }
+  .panel h3{margin:6px 0 12px 0;color:var(--neon);font-weight:800}
+  .stage {
+    display:flex;
+    flex-direction:column;
+    gap:10px;
+  }
+  .stage button{
+    background:transparent;
+    border:1px solid rgba(255,255,255,0.03);
+    color:var(--muted);
+    padding:12px 14px;
+    border-radius:12px;
+    text-align:left;
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+    gap:8px;
+    cursor:pointer;
+    font-weight:600;
+    transition:all .22s ease;
+    backdrop-filter: blur(6px);
+  }
+  .stage button.active{
+    border-color:rgba(255,111,160,0.24);
+    box-shadow:0 10px 30px rgba(255,90,140,0.06);
+    background:linear-gradient(180deg, rgba(255,111,160,0.02), rgba(255,111,160,0.01));
+    color:white;
+    transform:translateX(4px);
+  }
+
+  .code-fragments{
+    margin-top:18px;padding:14px;border-radius:12px;background:linear-gradient(180deg, rgba(255,255,255,0.01), rgba(255,255,255,0.006));
+    display:flex;gap:12px;align-items:center;flex-wrap:wrap;
+    border:1px solid rgba(255,255,255,0.02);
+  }
+  .frag{
+    background:linear-gradient(90deg, rgba(255,255,255,0.01), rgba(255,255,255,0.006));
+    padding:10px 14px;border-radius:10px;font-weight:800;color:#fff;
+    min-width:64px;text-align:center;font-size:16px;
+    border:1px solid rgba(255,255,255,0.02);
+    letter-spacing:1px;
+  }
+
+  .hint{
+    margin-top:16px;color:var(--muted);font-size:13px;
+  }
+
+  /* right big area */
+  .stage-area{
+    min-height:520px;
+    background: linear-gradient(180deg, rgba(255,255,255,0.008), rgba(255,255,255,0.002));
+    border-radius:12px;padding:22px; position:relative;
+    overflow:hidden;
+    border:1px solid rgba(255,255,255,0.02);
+  }
+
+  /* intro */
+  .intro {
+    display:flex;flex-direction:column;gap:12px;align-items:flex-start;
+    justify-content:center;height:100%;
+  }
+  .intro p{color:var(--muted);margin:0;max-width:60ch}
+  .btn{
+    background: linear-gradient(90deg, var(--neon), var(--neon-2));
+    color:white;border:0;padding:12px 16px;border-radius:12px;font-weight:800;
+    cursor:pointer;box-shadow:0 14px 40px rgba(255,90,140,0.12);
+    display:inline-flex;gap:10px;align-items:center;
+    transition:transform .16s;
+  }
+  .btn:hover{transform:translateY(-4px)}
+
+  /* Memory grid */
+  .memory-grid{
+    display:grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap:14px;
+    margin-top:12px;
+  }
+  .card{
+    perspective:1200px;
+    cursor:pointer; height:120px; position:relative;
+  }
+  .card-inner{
+    position:relative;height:100%;transition:transform .64s cubic-bezier(.2,.9,.2,1);transform-style:preserve-3d;border-radius:14px;
+  }
+  .card.flipped .card-inner{transform:rotateY(180deg)}
+  .card-face{
+    position:absolute;inset:0;border-radius:14px;display:grid;place-items:center;font-size:48px;
+    backface-visibility:hidden;overflow:hidden;
+  }
+  .card-front{
+    background:linear-gradient(180deg, rgba(255,255,255,0.01), rgba(255,255,255,0.008));
+    border:1px solid rgba(255,255,255,0.02);
+    color:var(--muted);display:grid;place-items:center;
+  }
+  .card-front .pattern{
+    width:100%;height:100%;background:
+      radial-gradient(circle at 10% 10%, rgba(255,255,255,0.01), transparent 8%),
+      linear-gradient(135deg, rgba(255,255,255,0.01), rgba(255,255,255,0.00));
+  }
+  .card-back{
+    background:linear-gradient(90deg, rgba(255,111,160,0.12), rgba(255,61,138,0.04));
+    transform:rotateY(180deg);
+    color:white;font-weight:800;font-size:20px;
+    box-shadow:0 10px 40px rgba(255,90,140,0.06);
+  }
+  .card-back img{width:64px;height:64px;object-fit:contain;filter:drop-shadow(0 6px 14px rgba(255,90,140,0.06))}
+
+  /* Find grid */
+  .find-grid{
+    display:grid;
+    grid-template-columns:repeat(4,1fr);
+    gap:12px;
+    margin-top:12px;
+  }
+  .find-item{
+    background:linear-gradient(180deg, rgba(255,255,255,0.008), rgba(255,255,255,0.004));
+    padding:16px;border-radius:12px;border:1px solid rgba(255,255,255,0.02);
+    display:grid;place-items:center;font-size:26px;cursor:pointer;
+    transition:transform .14s ease, box-shadow .14s;
+  }
+  .find-item:hover{transform:translateY(-6px);box-shadow:0 18px 40px rgba(0,0,0,0.6)}
+  .find-item.wrong{
+    animation: shake .46s;
+    border-color:rgba(255,60,100,0.12);
+    box-shadow:0 6px 18px rgba(255,50,100,0.04);
+  }
+  @keyframes shake{
+    0%{transform:translateX(0)}
+    25%{transform:translateX(-8px)}
+    50%{transform:translateX(8px)}
+    75%{transform:translateX(-6px)}
+    100%{transform:translateX(0)}
+  }
+  .find-item img{width:54px;height:54px;object-fit:contain}
+
+  /* scratch */
+  .scratch-wrap{
+    display:flex;align-items:center;justify-content:center;height:100%;
+    gap:18px;flex-direction:column;
+  }
+  .scratch-card{
+    width:420px;height:260px;border-radius:16px;background:linear-gradient(180deg,#111118,#0b0b11);
+    display:grid;place-items:center;color:white;font-weight:900;font-size:56px;position:relative;overflow:hidden;
+    border:1px solid rgba(255,255,255,0.03);
+    box-shadow:0 18px 60px rgba(0,0,0,0.6);
+  }
+  .scratch-inner{
+    position:absolute;inset:0;display:flex;align-items:center;justify-content:center;
+  }
+  .scratch-hint{font-size:13px;color:var(--muted)}
+  .progress-bar{
+    width:420px;height:8px;border-radius:6px;background:rgba(255,255,255,0.03);overflow:hidden;border:1px solid rgba(255,255,255,0.02);
+  }
+  .progress-fill{
+    height:100%;width:0%;background:linear-gradient(90deg,var(--neon),var(--neon-2));transition:width .22s ease;
+  }
+
+  /* final */
+  .final-box{display:flex;flex-direction:column;gap:12px;align-items:flex-start}
+  .code-inputs{display:flex;gap:8px}
+  .code-inputs input{
+    width:220px;padding:12px;border-radius:10px;border:1px solid rgba(255,255,255,0.04);
+    background:transparent;color:white;font-weight:800;font-size:16px;padding-left:14px;
+  }
+  .muted{color:var(--muted);font-size:13px}
+
+  /* success hearts */
+  .hearts{
+    position:absolute;inset:0;pointer-events:none;
+  }
+  .heart{
+    position:absolute;width:22px;height:22px;background:var(--neon);
+    transform:rotate(45deg);
+    border-radius:4px 4px 0 0;
+    opacity:0.95;
+    box-shadow:0 10px 30px rgba(255,90,140,0.12);
+  }
+  .heart:before,.heart:after{
+    content:"";position:absolute;width:22px;height:22px;background:var(--neon);
+    border-radius:50%;
+    top:-11px;left:0;
+  }
+  .heart:after{left:11px;top:0}
+
+  @media (max-width:980px){
+    main{grid-template-columns:1fr;align-items:stretch}
+    .panel{order:2}
+    .stage-area{order:1}
+    .scratch-card,.progress-bar{width:100%}
+  }
+</style>
+</head>
+<body>
+  <div class="wrap" role="application" aria-label="Квест Валентинка">
+    <header>
+      <div class="brand">
+        <div class="logo">❤</div>
+        <div>
+          <h1>Нажми ctrl+w</h1>
+          <p class="lead">3 уровня → 3 части кода → финальная разгадка</p>
+        </div>
+      </div>
+      <div style="text-align:right">
+        <div class="muted">собаке 40 лет</div>
+      </div>
+    </header>
+
+    <main>
+      <aside class="panel" aria-hidden="false">
+        <h3>Этапы</h3>
+        <div class="stage" id="stages">
+          <button id="btn-intro" class="active" data-stage="intro" aria-pressed="true">Вступление</button>
+          <button id="btn-memory" data-stage="memory" aria-pressed="false">Уровень 1 — Память</button>
+          <button id="btn-find" data-stage="find" aria-pressed="false">Уровень 2 — Найди правильный</button>
+          <button id="btn-scratch" data-stage="scratch" aria-pressed="false">Уровень 3 — Сотри покрытие 0_0 </button>
+          <button id="btn-final" data-stage="final" aria-pressed="false">Финал — ввести код</button>
+        </div>
+
+        <div style="margin-top:18px">
+          <div class="muted">Собранные фрагменты</div>
+          <div class="code-fragments" id="fragments">
+            <div class="frag" id="frag-1">—</div>
+            <div class="frag" id="frag-2">—</div>
+            <div class="frag" id="frag-3">—</div>
+          </div>
+        </div>
+
+        <div class="hint">Подсказка: на 3 уровне нажми F5</div>
+      </aside>
+
+      <section class="stage-area" id="stageArea" aria-live="polite">
+        <!-- Intro -->
+        <div id="intro" class="intro view">
+          <h2 style="color:white;margin:0 0 6px 0">Система защищена</h2>
+          <p>Чтобы открыть финальное послание — пройди три уровня и собери код из фрагментов. На каждом уровне — картинка и небольшой вызов.</p>
+          <div style="display:flex;gap:12px;margin-top:12px">
+            <button class="btn" id="startBtn">Начать миссию</button>
+            <button class="btn" id="showUi" style="background:transparent;border:1px solid rgba(255,255,255,0.03);color:var(--muted)">Посмотреть интерфейс</button>
+          </div>
+        </div>
+
+        <!-- Memory -->
+        <div id="memory" class="view" style="display:none">
+          <h3 style="color:var(--neon);margin-top:0">Уровень 1 — Память</h3>
+          <p class="muted">Найди пары одинаковых картинок</p>
+          <div class="memory-grid" id="memoryGrid" aria-live="polite"></div>
+          <div style="display:flex;justify-content:space-between;align-items:center;margin-top:12px">
+            <div class="muted">Пары: <span id="pairsCount">0</span> / <span id="pairsTotal">0</span></div>
+            <button class="btn" id="shuffleMemory" style="background:transparent;border:1px solid rgba(255,255,255,0.03);color:var(--muted)">Перемешать</button>
+          </div>
+        </div>
+
+        <!-- Find -->
+        <div id="find" class="view" style="display:none">
+          <h3 style="color:var(--neon);margin-top:0">Уровень 2 — Найди правильную</h3>
+          <p class="muted">Нажми на штуку которая чучуть напоминает жопу</p>
+          <div class="find-grid" id="findGrid" aria-live="polite"></div>
+          <div style="margin-top:12px" class="muted">Подсказка: правильный вариант — сердечко.</div>
+        </div>
+
+        <!-- Scratch -->
+        <div id="scratch" class="view" style="display:none">
+          <h3 style="color:var(--neon);margin-top:0">Уровень 3 — Сотри покрытие</h3>
+          <p class="muted">Сотри верхний слой своим самым красивым пальцем или мышью</p>
+          <div class="scratch-wrap">
+            <div class="scratch-card" id="scratchCard">
+              <div class="scratch-inner" id="scratchInner">
+                <div id="scratchText" style="font-size:56px;font-weight:900;letter-spacing:2px;color:#fff">мыца≠ванять</div>
+              </div>
+              <canvas id="scratchCanvas" width="420" height="260" style="position:absolute;inset:0"></canvas>
+            </div>
+            <div class="progress-bar" aria-hidden="true"><div class="progress-fill" id="progressFill"></div></div>
+            <div id="scratchProgress" class="muted">Прогресс: 0%</div>
+          </div>
+        </div>
+
+        <!-- Final -->
+        <div id="final" class="view" style="display:none">
+          <h3 style="color:var(--neon);margin-top:0">Финал — Ввод кода</h3>
+          <div class="final-box">
+            <p class="muted">Введи код из трёх фрагментов (например: <strong>232323</strong>, <em>pohuy</em> или <em>14-02-26</em>).</p>
+            <div class="code-inputs" style="margin-top:4px">
+              <input id="codeInput" aria-label="ввод кода" placeholder="Введите код" />
+              <button class="btn" id="unlockBtn">Открыть</button>
+            </div>
+            <div id="finalMessage" style="margin-top:12px"></div>
+          </div>
+        </div>
+
+        <div class="hearts" id="hearts" aria-hidden="true"></div>
+      </section>
+    </main>
+  </div>
+
+<script>
+/* ----------------- Утилиты для inline SVG-картинок ----------------- */
+function svgDataUrl(emoji, size=120, bg='transparent'){
+  const svg = `<svg xmlns='http://www.w3.org/2000/svg' width='${size}' height='${size}' viewBox='0 0 ${size} ${size}'>
+    <rect width='100%' height='100%' rx='18' fill='${bg}'/>
+    <text x='50%' y='52%' dominant-baseline='middle' text-anchor='middle' font-size='56'>${emoji}</text>
+  </svg>`;
+  return 'data:image/svg+xml;utf8,' + encodeURIComponent(svg);
+}
+
+/* --------------- Состояние приложения ---------------- */
+const state = {
+  fragments: [null, null, null],
+  currentStage: 'intro'
+};
+
+/* --------------- Навигация между этапами --------------- */
+const stageButtons = document.querySelectorAll('.stage button');
+const views = document.querySelectorAll('.view');
+const fragEls = [document.getElementById('frag-1'), document.getElementById('frag-2'), document.getElementById('frag-3')];
+
+function showStage(name){
+  state.currentStage = name;
+  stageButtons.forEach(b=>{
+    const s = b.dataset.stage;
+    if(s===name){ b.classList.add('active'); b.setAttribute('aria-pressed','true'); }
+    else { b.classList.remove('active'); b.setAttribute('aria-pressed','false'); }
+  });
+  views.forEach(v=> v.style.display = (v.id===name ? 'block' : 'none'));
+  // фокус для доступности
+  const first = document.getElementById(name);
+  if(first) first.focus?.();
+}
+stageButtons.forEach(b=> b.addEventListener('click', ()=> showStage(b.dataset.stage)));
+
+/* --------------- Intro actions --------------- */
+document.getElementById('startBtn').addEventListener('click', ()=> showStage('memory'));
+document.getElementById('showUi').addEventListener('click', ()=> showStage('memory'));
+
+/* ----------------- Игра 1: Memory (с картинками) ----------------- */
+const memoryGrid = document.getElementById('memoryGrid');
+const pairsCountEl = document.getElementById('pairsCount');
+const pairsTotalEl = document.getElementById('pairsTotal');
+
+// Базовые картинки (можно заменить на свои URL'ы или data URLs)
+const imageSet = [
+  '1.jpg', '2.jpg', '3.jpg',
+  '4.jpg', '5.jpg', '6.jpg'
+];
+
+let memoryDeck = [];
+let firstCard=null, secondCard=null, lockBoard=false, matchedPairs=0;
+
+function initMemory(){
+  // создаём колоду (пары)
+  const items = imageSet.slice(0,6); // 6 уникальных
+  pairsTotalEl.textContent = items.length;
+  memoryDeck = shuffle([...items, ...items]);
+  memoryGrid.innerHTML = '';
+  matchedPairs = 0; pairsCountEl.textContent = matchedPairs;
+  memoryDeck.forEach((imgUrl, i)=>{
+    const c = document.createElement('div');
+    c.className = 'card';
+    c.setAttribute('data-index', i);
+    c.setAttribute('role','button');
+    c.setAttribute('aria-label','карточка');
+    c.innerHTML = `
+      <div class="card-inner">
+        <div class="card-face card-front"><div class="pattern"></div></div>
+        <div class="card-face card-back"><img src="${imgUrl}" alt="иконка ${i}" /></div>
+      </div>
+    `;
+    c.addEventListener('click', ()=> onCardClick(c, imgUrl));
+    memoryGrid.appendChild(c);
+  });
+}
+
+function onCardClick(card, imgUrl){
+  if(lockBoard) return;
+  if(card.classList.contains('flipped')) return;
+  card.classList.add('flipped');
+  if(!firstCard){
+    firstCard = {card, imgUrl};
+    return;
+  }
+  secondCard = {card, imgUrl};
+  lockBoard = true;
+  setTimeout(()=> {
+    const isMatch = firstCard.imgUrl === secondCard.imgUrl;
+    if(isMatch){
+      matchedPairs++;
+      pairsCountEl.textContent = matchedPairs;
+      // если все пары собраны, выдаём фрагмент и идём дальше
+      if(matchedPairs === imageSet.length){
+        collectFragment(0,'14');
+        setTimeout(()=> showStage('find'), 900);
+      }
+    } else {
+      firstCard.card.classList.remove('flipped');
+      secondCard.card.classList.remove('flipped');
+    }
+    firstCard = null; secondCard = null; lockBoard=false;
+  }, 700);
+}
+document.getElementById('shuffleMemory').addEventListener('click', ()=> initMemory());
+
+/* ----------------- Игра 2: Find the Real One (с картинками) ----------------- */
+const findGrid = document.getElementById('findGrid');
+
+function initFind(){
+  findGrid.innerHTML = '';
+  // Набор картинок (включая "правильную" — сердечко)
+  const options = [
+    '1.jpg', '2.jpg', '3.jpg', '4.jpg',
+    svgDataUrl('❤️'), '6.jpg', '5.jpg', svgDataUrl('🖕'),
+    svgDataUrl('🎮'), svgDataUrl('🌸'), svgDataUrl('✈️'), svgDataUrl('⭐')
+  ];
+  const arranged = shuffle(options.slice());
+  arranged.forEach(opt=>{
+    const d = document.createElement('div');
+    d.className = 'find-item';
+    d.innerHTML = `<img src="${opt}" alt="вариант" />`;
+    d.addEventListener('click', ()=> onFindClick(d, opt));
+    findGrid.appendChild(d);
+  });
+}
+
+function onFindClick(el, opt){
+  const correct = svgDataUrl('❤️'); // тот же dataUrl-шаблон
+  // Сравниваем просто по наличию сердечка в dataURL (без жёсткого сравнения)
+  const isHeart = opt.includes(encodeURIComponent('❤️')) || opt.includes('%E2%9D%A4') || opt.includes('❤️');
+  if(isHeart){
+    el.style.boxShadow = '0 14px 40px rgba(255,111,160,0.18)';
+    el.style.transform = 'translateY(-6px)';
+    el.classList.add('done');
+    collectFragment(1,'02');
+    setTimeout(()=> showStage('scratch'), 900);
+  } else {
+    el.classList.add('wrong');
+    setTimeout(()=> el.classList.remove('wrong'), 420);
+    // лёгкий глитч — перемешаем
+    const children = Array.from(findGrid.children);
+    shuffle(children).forEach(c=> findGrid.appendChild(c));
+  }
+}
+
+/* ----------------- Игра 3: Scratch (исправленная логика прогресса) ----------------- */
+const canvas = document.getElementById('scratchCanvas');
+const ctx = canvas.getContext('2d');
+const scratchProgress = document.getElementById('scratchProgress');
+const progressFill = document.getElementById('progressFill');
+let isDrawing = false;
+let lastPos = null;
+let revealed = false;
+
+function initScratch(){
+  // фиксируем canvas под размер карточки (поддержка mobile)
+  const card = document.getElementById('scratchCard');
+  const rect = card.getBoundingClientRect();
+  // используем целые пиксели для корректного подсчёта
+  canvas.width = Math.max(320, Math.round(rect.width));
+  canvas.height = Math.max(200, Math.round(rect.height));
+  // заполняем непрозрачным слоем
+  ctx.clearRect(0,0,canvas.width,canvas.height);
+  ctx.fillStyle = '#bbbbbb'; // плотный слой
+  ctx.fillRect(0,0,canvas.width,canvas.height);
+  // добавим лёгкую текстуру (не влияет на прозрачность подсчёта)
+  ctx.globalAlpha = 1;
+  ctx.fillStyle = 'rgba(100,100,100,0.02)';
+  for(let i=0;i<120;i++){
+    ctx.fillRect(Math.random()*canvas.width, Math.random()*canvas.height, Math.random()*6+1, Math.random()*6+1);
+  }
+  // стираем режим
+  ctx.globalCompositeOperation = 'source-over';
+  canvas.style.touchAction = 'none';
+  canvas.addEventListener('pointerdown', pDown);
+  canvas.addEventListener('pointermove', pMove);
+  canvas.addEventListener('pointerup', pUp);
+  canvas.addEventListener('pointerleave', pUp);
+  // сброс флагов
+  isDrawing = false; lastPos = null; revealed = false;
+  updateScratchProgress(); // покажем 0
+}
+
+function pDown(e){
+  isDrawing = true;
+  lastPos = getPointerPos(e);
+  drawPoint(lastPos.x,lastPos.y);
+}
+function pMove(e){
+  if(!isDrawing) return;
+  const p = getPointerPos(e);
+  ctx.globalCompositeOperation = 'destination-out';
+  ctx.lineCap = 'round';
+  ctx.lineJoin = 'round';
+  ctx.strokeStyle = 'rgba(0,0,0,1)';
+  ctx.lineWidth = Math.max(24, Math.round(Math.min(canvas.width, canvas.height) * 0.07));
+  ctx.beginPath();
+  ctx.moveTo(lastPos.x, lastPos.y);
+  ctx.lineTo(p.x, p.y);
+  ctx.stroke();
+  lastPos = p;
+  // обновляем прогресс чаще
+  if(Math.random() < 0.16) updateScratchProgress();
+}
+function pUp(e){
+  if(!isDrawing) return;
+  isDrawing = false;
+  updateScratchProgress();
+}
+
+function drawPoint(x,y){
+  ctx.globalCompositeOperation = 'destination-out';
+  ctx.beginPath();
+  ctx.arc(x,y, Math.max(12, Math.round(Math.min(canvas.width, canvas.height) * 0.03)),0,Math.PI*2);
+  ctx.fill();
+}
+
+function getPointerPos(e){
+  const r = canvas.getBoundingClientRect();
+  const x = (e.clientX - r.left) * (canvas.width / r.width);
+  const y = (e.clientY - r.top) * (canvas.height / r.height);
+  return { x, y };
+}
+
+function updateScratchProgress(){
+  // надёжный способ: считаем пиксели с alpha < 128 (или альфа === 0)
+  try {
+    const img = ctx.getImageData(0,0,canvas.width,canvas.height);
+    const total = img.data.length / 4;
+    let clear = 0;
+    // считаем пиксели, у которых alpha < 128 (помогает учитывать сглаживание)
+    for(let i=0;i<img.data.length;i+=4){
+      const alpha = img.data[i+3];
+      if(alpha <= 128) clear++;
+    }
+    const percent = Math.round((clear / total) * 100);
+    scratchProgress.textContent = `Прогресс: ${percent}%`;
+    progressFill.style.width = percent + '%';
+    // допускаем достижение 100%
+    if(percent >= 60 && !revealed){
+      // отметим фрагмент
+      revealed = true;
+      collectFragment(2,'26');
+      // плавно исчезаем
+      canvas.style.transition = 'opacity .6s';
+      setTimeout(()=> canvas.style.opacity = '0', 200);
+      setTimeout(()=> {
+        if(canvas && canvas.parentNode) canvas.parentNode.removeChild(canvas);
+      }, 900);
+    }
+    // если percent === 100, уверенно установим 100
+    return percent;
+  } catch (err){
+    // иногда getImageData может бросить в некоторых окружениях — на случай ошибки
+    console.error('Ошибка прогресса скретча', err);
+    scratchProgress.textContent = `Прогресс: —`;
+    return 0;
+  }
+}
+
+/* ----------------- Сбор фрагментов ----------------- */
+function collectFragment(index, value){
+  if(state.fragments[index]) return;
+  state.fragments[index] = value;
+  fragEls[index].textContent = value;
+  fragEls[index].style.background = 'linear-gradient(90deg, rgba(255,111,160,0.12), rgba(255,61,138,0.06))';
+  fragEls[index].style.borderColor = 'rgba(255,111,160,0.09)';
+}
+
+/* ----------------- Финал: проверка кода (более надёжно) ----------------- */
+document.getElementById('unlockBtn').addEventListener('click', tryUnlock);
+document.getElementById('codeInput').addEventListener('keydown', (e)=> {
+  if(e.key === 'Enter') tryUnlock();
+});
+
+function normalizeCode(raw){
+  if(!raw) return '';
+  // оставим только цифры
+  return raw.replace(/\D/g, '');
+}
+
+function tryUnlock(){
+  const raw = document.getElementById('codeInput').value.trim();
+  const normalized = normalizeCode(raw);
+  const expected = (state.fragments[0]||'') + (state.fragments[1]||'') + (state.fragments[2]||'');
+  const out = document.getElementById('finalMessage');
+
+  if(!state.fragments.every(Boolean)){
+    out.innerHTML = `<div class="muted">Бро ещё не собрал все фрагменты. Пройди!!!!!!!!!!!!!! все три уровня.</div>`;
+    return;
+  }
+  if(!expected){
+    out.innerHTML = `<div class="muted">Эммм: ожидаемые фрагменты не заданы.</div>`;
+    return;
+  }
+  if(normalized === expected){
+    out.innerHTML = `<div style="color:white;font-weight:800">Доступ мб разрешён. Ты прошла все уровни.</div><div style="margin-top:8px;color:var(--muted)"></div>`;
+    spawnHearts();
+    setTimeout(()=> showSecretMessage(), 800);
+  } else {
+    out.innerHTML = `<div class="muted">Неверный код братанчик Проверь фрагменты.</div>`;
+    // shake
+    document.getElementById('codeInput').animate([{transform:'translateX(0)'},{transform:'translateX(-8px)'},{transform:'translateX(8px)'},{transform:'translateX(0)'}],{duration:420});
+  }
+}
+
+/* ----------------- Финальное сообщение и конфетти ----------------- */
+function showSecretMessage(){
+  const area = document.getElementById('stageArea');
+  area.innerHTML = `
+    <div style="padding:26px">
+      <h2 style="color:white;margin:0 0 8px 0">💖 ВОПРОС</h2>
+      <p class="muted" style="margin:0 0 18px 0">Ты сделала это! Ю МЭЙК ИТ! и теперь доступ открыт.</p>
+      <div style="font-size:18px;color:var(--muted);margin-bottom:16px">Будешь моей Валентинкой?</div>
+      <div style="display:flex;gap:10px">
+        <button class="btn" id="accept">Да</button>
+        <button class="btn" id="maybe" style="background:transparent;border:1px solid rgba(255,255,255,0.03);color:var(--muted)">фу</button>
+      </div>
+    </div>
+  `;
+  document.getElementById('accept').addEventListener('click', ()=>{
+    const area = document.getElementById('stageArea');
+    area.innerHTML = `<div style="padding:28px"><h2 style="color:var(--neon)">💘 Да!</h2><p class="muted">Я раддддд! https://youtube.com/shorts/Ay8lynMZ4mE?si=kObmufRcfFSqe2rV</p></div>`;
+  });
+  document.getElementById('maybe').addEventListener('click', ()=> {
+    alert('хорошая концовка :)');
+  });
+}
+
+function spawnHearts(){
+  const container = document.getElementById('hearts');
+  for(let i=0;i<28;i++){
+    const el = document.createElement('div');
+    el.className = 'heart';
+    const left = Math.random()*100;
+    el.style.left = left + '%';
+    el.style.top = '-8%';
+    el.style.transform = `translateX(-50%) rotate(${Math.random()*40-20}deg)`;
+    el.style.opacity = (0.6 + Math.random()*0.4);
+    container.appendChild(el);
+    const endY = 110 + Math.random()*40;
+    el.animate([
+      { transform: `translateY(0) translateX(0) rotate(${Math.random()*60-30}deg)`, opacity:el.style.opacity },
+      { transform: `translateY(${endY}vh) translateX(${(Math.random()*40-20)}px) rotate(${Math.random()*120-60}deg)`, opacity:0.2 }
+    ],{ duration: 3000 + Math.random()*1600, easing:'cubic-bezier(.2,.8,.2,1)' });
+    setTimeout(()=> el.remove(), 5200);
+  }
+}
+
+/* ----------------- Вспомогательные функции ----------------- */
+function shuffle(arr){
+  const a = arr.slice();
+  for(let i=a.length-1;i>0;i--){
+    const j = Math.floor(Math.random()*(i+1));
+    [a[i], a[j]] = [a[j], a[i]];
+  }
+  return a;
+}
+
+/* ----------------- Инициализация ----------------- */
+initMemory();
+initFind();
+initScratch();
+showStage('intro');
+
+/* accessibility: Esc -> intro */
+document.addEventListener('keydown', (e)=>{
+  if(e.key === 'Escape') showStage('intro');
+});
+</script>
+</body>
+</html>
